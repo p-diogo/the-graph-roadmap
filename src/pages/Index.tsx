@@ -1,11 +1,27 @@
 import { roadmapLayers, quarters } from "@/data/roadmapData";
 import { LayerSection } from "@/components/LayerSection";
+import { FilterIndicator } from "@/components/FilterIndicator";
+import { useRoadmapFilter } from "@/hooks/useRoadmapFilter";
 
 const Index = () => {
+  const {
+    activeFilter,
+    activeLayerFilter,
+    hasActiveFilter,
+    isItemVisible,
+    isItemHighlighted,
+    toggleCardFilter,
+    toggleLayerFilter,
+    clearFilter,
+  } = useRoadmapFilter(roadmapLayers);
+
   return (
-    <div className="min-h-screen bg-background">
-      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 py-10">
-        {/* Header - minimal since nav will come from thegraph.com */}
+    <div className="min-h-screen bg-background" onClick={() => hasActiveFilter && clearFilter()}>
+      <div 
+        className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 py-10"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
         <header className="mb-8 pb-6 border-b border-border">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-foreground mb-3">
             Core Dev Roadmap
@@ -14,6 +30,13 @@ const Index = () => {
             Building the decentralized data infrastructure of tomorrow. Our strategic roadmap outlines how we're scaling The Graph protocol across multiple data services while pioneering new economic models through Horizon.
           </p>
         </header>
+
+        {/* Filter Indicator */}
+        <FilterIndicator 
+          activeFilter={activeFilter}
+          activeLayerFilter={activeLayerFilter}
+          onClear={clearFilter}
+        />
 
         {/* Quarter Headers - Desktop only */}
         <div className="hidden lg:grid grid-cols-[theme(spacing.64)_1fr] gap-8 mb-6">
@@ -30,7 +53,16 @@ const Index = () => {
         {/* Layers */}
         <div className="space-y-10">
           {roadmapLayers.map((layer) => (
-            <LayerSection key={layer.id} layer={layer} />
+            <LayerSection 
+              key={layer.id} 
+              layer={layer}
+              isLayerActive={activeLayerFilter === layer.id}
+              isItemVisible={isItemVisible}
+              isItemHighlighted={isItemHighlighted}
+              onCardClick={toggleCardFilter}
+              onLayerClick={toggleLayerFilter}
+              hasActiveFilter={hasActiveFilter}
+            />
           ))}
         </div>
 
