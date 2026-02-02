@@ -11,31 +11,48 @@ interface RoadmapCardProps {
   item: RoadmapItem;
   colorClass: "product" | "protocol" | "tokenomics";
   isSpanning?: boolean;
+  isVisible?: boolean;
+  isHighlighted?: boolean;
+  onClick?: () => void;
 }
 
 const colorMap = {
   product: {
     border: "border-layer-product/30 hover:border-layer-product/60",
+    borderActive: "border-layer-product ring-2 ring-layer-product/40",
     text: "text-layer-product",
     bg: "bg-layer-product/10",
     line: "bg-layer-product/50",
   },
   protocol: {
     border: "border-layer-protocol/30 hover:border-layer-protocol/60",
+    borderActive: "border-layer-protocol ring-2 ring-layer-protocol/40",
     text: "text-layer-protocol",
     bg: "bg-layer-protocol/10",
     line: "bg-layer-protocol/50",
   },
   tokenomics: {
     border: "border-layer-tokenomics/30 hover:border-layer-tokenomics/60",
+    borderActive: "border-layer-tokenomics ring-2 ring-layer-tokenomics/40",
     text: "text-layer-tokenomics",
     bg: "bg-layer-tokenomics/10",
     line: "bg-layer-tokenomics/50",
   },
 };
 
-export function RoadmapCard({ item, colorClass, isSpanning }: RoadmapCardProps) {
+export function RoadmapCard({ 
+  item, 
+  colorClass, 
+  isSpanning,
+  isVisible = true,
+  isHighlighted = false,
+  onClick,
+}: RoadmapCardProps) {
   const colors = colorMap[colorClass];
+
+  if (!isVisible) {
+    return null;
+  }
 
   const statusBadge = () => {
     if (item.status === "experimental") {
@@ -64,10 +81,11 @@ export function RoadmapCard({ item, colorClass, isSpanning }: RoadmapCardProps) 
 
   const cardContent = (
     <div
+      onClick={onClick}
       className={cn(
         isSpanning ? "roadmap-card-span" : "roadmap-card",
-        colors.border,
-        "group"
+        isHighlighted ? colors.borderActive : colors.border,
+        "group cursor-pointer select-none"
       )}
     >
       <div className="flex justify-between items-start gap-2">
@@ -107,7 +125,7 @@ export function RoadmapCard({ item, colorClass, isSpanning }: RoadmapCardProps) 
         </TooltipTrigger>
         <TooltipContent 
           side="top" 
-          className="max-w-xs bg-popover border-border text-foreground p-3"
+          className="max-w-xs bg-popover border-border text-foreground p-3 z-50"
         >
           <p className="text-sm leading-relaxed">{item.tooltip}</p>
         </TooltipContent>

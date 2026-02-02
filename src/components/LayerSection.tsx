@@ -5,6 +5,12 @@ import { Sparkles, Layers, Coins } from "lucide-react";
 
 interface LayerSectionProps {
   layer: Layer;
+  isLayerActive?: boolean;
+  isItemVisible: (itemId: string, layerId: string) => boolean;
+  isItemHighlighted: (itemId: string) => boolean;
+  onCardClick: (itemId: string) => void;
+  onLayerClick: (layerId: string) => void;
+  hasActiveFilter: boolean;
 }
 
 const iconMap = {
@@ -19,24 +25,38 @@ const colorMap = {
     iconColor: "text-layer-product",
     tagBg: "bg-layer-product/10 border-layer-product/20",
     tagText: "text-layer-product",
+    activeBg: "bg-layer-product/15 border-layer-product/50",
   },
   protocol: {
     iconBg: "bg-layer-protocol/10 border-layer-protocol/30",
     iconColor: "text-layer-protocol",
     tagBg: "bg-layer-protocol/10 border-layer-protocol/20",
     tagText: "text-layer-protocol",
+    activeBg: "bg-layer-protocol/15 border-layer-protocol/50",
   },
   tokenomics: {
     iconBg: "bg-layer-tokenomics/10 border-layer-tokenomics/30",
     iconColor: "text-layer-tokenomics",
     tagBg: "bg-layer-tokenomics/10 border-layer-tokenomics/20",
     tagText: "text-layer-tokenomics",
+    activeBg: "bg-layer-tokenomics/15 border-layer-tokenomics/50",
   },
 };
 
-export function LayerSection({ layer }: LayerSectionProps) {
+export function LayerSection({ 
+  layer, 
+  isLayerActive,
+  isItemVisible,
+  isItemHighlighted,
+  onCardClick,
+  onLayerClick,
+  hasActiveFilter,
+}: LayerSectionProps) {
   const Icon = iconMap[layer.colorClass];
   const colors = colorMap[layer.colorClass];
+
+  // Check if any items in this layer are visible
+  const hasVisibleItems = layer.items.some(item => isItemVisible(item.id, layer.id));
 
   // Group items by quarter for simpler display
   const getItemsForQuarter = (quarter: string) => {
@@ -48,9 +68,21 @@ export function LayerSection({ layer }: LayerSectionProps) {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 pb-10 border-b border-border/50">
-      {/* Layer Sidebar */}
-      <div className="lg:w-56 xl:w-64 flex-shrink-0 lg:border-r border-border lg:pr-6">
+    <div 
+      className={cn(
+        "flex flex-col lg:flex-row gap-6 lg:gap-8 pb-10 border-b border-border/50 transition-opacity duration-300",
+        hasActiveFilter && !hasVisibleItems && "opacity-30"
+      )}
+    >
+      {/* Layer Sidebar - Clickable for filtering */}
+      <div 
+        onClick={() => onLayerClick(layer.id)}
+        className={cn(
+          "lg:w-56 xl:w-64 flex-shrink-0 lg:border-r border-border lg:pr-6",
+          "layer-sidebar group",
+          isLayerActive && colors.activeBg
+        )}
+      >
         <div className="flex items-center gap-3 mb-3">
           <div className={cn("p-2 rounded-lg border", colors.iconBg)}>
             <Icon className={cn("w-5 h-5", colors.iconColor)} />
@@ -58,13 +90,16 @@ export function LayerSection({ layer }: LayerSectionProps) {
           <h2 className="text-xl font-bold text-foreground">{layer.name}</h2>
         </div>
         
-        <div className="mb-3">
+        <div className="mb-3 flex items-center gap-2">
           <span className={cn(
             "px-2 py-1 text-xs font-bold uppercase tracking-wider rounded border",
             colors.tagBg,
             colors.tagText
           )}>
             {layer.tagline}
+          </span>
+          <span className="text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">
+            Click to filter
           </span>
         </div>
         
@@ -83,7 +118,10 @@ export function LayerSection({ layer }: LayerSectionProps) {
                 <RoadmapCard 
                   key={item.id} 
                   item={item} 
-                  colorClass={layer.colorClass} 
+                  colorClass={layer.colorClass}
+                  isVisible={isItemVisible(item.id, layer.id)}
+                  isHighlighted={isItemHighlighted(item.id)}
+                  onClick={() => onCardClick(item.id)}
                 />
               ))}
             </div>
@@ -94,7 +132,8 @@ export function LayerSection({ layer }: LayerSectionProps) {
         {getSpanningItems().length > 0 && (
           <div className="hidden lg:grid grid-cols-5 gap-4 mt-4">
             {getSpanningItems().map((item) => {
-              // Calculate span based on quarter range
+              if (!isItemVisible(item.id, layer.id)) return null;
+              
               const startQ = item.spanQuarters?.split(" - ")[0] || "";
               const endQ = item.spanQuarters?.split(" - ")[1] || "";
               const startIdx = quarters.indexOf(startQ);
@@ -104,7 +143,6 @@ export function LayerSection({ layer }: LayerSectionProps) {
               return (
                 <div
                   key={item.id}
-                  className={cn("col-span-1")}
                   style={{
                     gridColumn: `${startIdx + 1} / span ${span}`,
                   }}
@@ -112,7 +150,10 @@ export function LayerSection({ layer }: LayerSectionProps) {
                   <RoadmapCard 
                     item={item} 
                     colorClass={layer.colorClass} 
-                    isSpanning 
+                    isSpanning
+                    isVisible={true}
+                    isHighlighted={isItemHighlighted(item.id)}
+                    onClick={() => onCardClick(item.id)}
                   />
                 </div>
               );
@@ -122,18 +163,25 @@ export function LayerSection({ layer }: LayerSectionProps) {
 
         {/* Mobile: Simple list */}
         <div className="lg:hidden space-y-3">
-          {layer.items.map((item) => (
-            <div key={item.id}>
-              <span className="text-xs text-muted-foreground font-medium mb-1 block">
-                {item.spanQuarters || item.quarter}
-              </span>
-              <RoadmapCard 
-                item={item} 
-                colorClass={layer.colorClass}
-                isSpanning={!!item.spanQuarters}
-              />
-            </div>
-          ))}
+          {layer.items.map((item) => {
+            if (!isItemVisible(item.id, layer.id)) return null;
+            
+            return (
+              <div key={item.id}>
+                <span className="text-xs text-muted-foreground font-medium mb-1 block">
+                  {item.spanQuarters || item.quarter}
+                </span>
+                <RoadmapCard 
+                  item={item} 
+                  colorClass={layer.colorClass}
+                  isSpanning={!!item.spanQuarters}
+                  isVisible={true}
+                  isHighlighted={isItemHighlighted(item.id)}
+                  onClick={() => onCardClick(item.id)}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
