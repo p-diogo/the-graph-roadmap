@@ -38,8 +38,8 @@ const Index = () => {
           onClear={clearFilter}
         />
 
-        {/* Quarter Headers - Desktop only */}
-        <div className="hidden lg:grid grid-cols-[theme(spacing.64)_1fr] gap-8 mb-6">
+        {/* Quarter Headers - Desktop only, Sticky */}
+        <div className="hidden lg:grid grid-cols-[theme(spacing.64)_1fr] gap-8 mb-6 sticky top-0 z-10 bg-background/95 backdrop-blur-sm py-3 -mx-10 px-10">
           <div /> {/* Spacer for sidebar */}
           <div className="grid grid-cols-5 gap-4">
             {quarters.map((quarter) => (
