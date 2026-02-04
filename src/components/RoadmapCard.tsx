@@ -1,5 +1,7 @@
 import { cn } from "@/lib/utils";
 import { RoadmapItem } from "@/data/roadmapData";
+import { getProductFamily, ProductFamily } from "@/data/productFamilies";
+import { ColorMode } from "./ColorModeSelector";
 import {
   Tooltip,
   TooltipContent,
@@ -10,13 +12,14 @@ import { Info } from "lucide-react";
 interface RoadmapCardProps {
   item: RoadmapItem;
   colorClass: "product" | "protocol" | "tokenomics";
+  colorMode?: ColorMode;
   isSpanning?: boolean;
   isVisible?: boolean;
   isHighlighted?: boolean;
   onClick?: () => void;
 }
 
-const colorMap = {
+const layerColorMap = {
   product: {
     border: "border-layer-product/30 hover:border-layer-product/60",
     borderActive: "border-layer-product ring-2 ring-layer-product/40",
@@ -43,12 +46,14 @@ const colorMap = {
 export function RoadmapCard({ 
   item, 
   colorClass, 
+  colorMode = "border",
   isSpanning,
   isVisible = true,
   isHighlighted = false,
   onClick,
 }: RoadmapCardProps) {
-  const colors = colorMap[colorClass];
+  const layerColors = layerColorMap[colorClass];
+  const productFamily = getProductFamily(item.title, item.description);
 
   if (!isVisible) {
     return null;
@@ -79,17 +84,104 @@ export function RoadmapCard({
     return null;
   };
 
+  // Get styles based on color mode and product family
+  const getCardStyles = () => {
+    const baseStyles = cn(
+      isSpanning ? "roadmap-card-span" : "roadmap-card",
+      "group cursor-pointer select-none relative overflow-hidden"
+    );
+
+    if (!productFamily) {
+      // No product family - use layer colors only
+      return cn(
+        baseStyles,
+        isHighlighted ? layerColors.borderActive : layerColors.border
+      );
+    }
+
+    switch (colorMode) {
+      case "border":
+        return cn(
+          baseStyles,
+          "border-l-4",
+          isHighlighted ? "ring-2 ring-offset-1 ring-offset-background" : ""
+        );
+      case "title":
+        return cn(
+          baseStyles,
+          isHighlighted ? layerColors.borderActive : layerColors.border
+        );
+      case "dot":
+        return cn(
+          baseStyles,
+          isHighlighted ? layerColors.borderActive : layerColors.border
+        );
+      case "gradient":
+        return cn(
+          baseStyles,
+          isHighlighted ? "ring-2 ring-offset-1 ring-offset-background" : ""
+        );
+      default:
+        return cn(
+          baseStyles,
+          isHighlighted ? layerColors.borderActive : layerColors.border
+        );
+    }
+  };
+
+  const getInlineStyles = (): React.CSSProperties => {
+    if (!productFamily) return {};
+
+    switch (colorMode) {
+      case "border":
+        return {
+          borderLeftColor: `hsl(${productFamily.color.accent})`,
+          ...(isHighlighted && { 
+            boxShadow: `0 0 0 2px hsl(${productFamily.color.accent} / 0.4)`,
+          }),
+        };
+      case "gradient":
+        return {
+          backgroundColor: `hsl(${productFamily.color.bg})`,
+          ...(isHighlighted && { 
+            boxShadow: `0 0 0 2px hsl(${productFamily.color.accent} / 0.4)`,
+          }),
+        };
+      default:
+        return {};
+    }
+  };
+
+  const getTitleColor = (): string | undefined => {
+    if (colorMode === "title" && productFamily) {
+      return `hsl(${productFamily.color.accent})`;
+    }
+    return undefined;
+  };
+
   const cardContent = (
     <div
       onClick={onClick}
-      className={cn(
-        isSpanning ? "roadmap-card-span" : "roadmap-card",
-        isHighlighted ? colors.borderActive : colors.border,
-        "group cursor-pointer select-none"
-      )}
+      className={getCardStyles()}
+      style={getInlineStyles()}
     >
+      {/* Corner dot indicator */}
+      {colorMode === "dot" && productFamily && (
+        <div
+          className="absolute top-2 right-2 w-3 h-3 rounded-full"
+          style={{ backgroundColor: `hsl(${productFamily.color.accent})` }}
+        />
+      )}
+
       <div className="flex justify-between items-start gap-2">
-        <h4 className={cn("font-bold", isSpanning ? "text-lg" : "text-base", colors.text)}>
+        <h4 
+          className={cn(
+            "font-bold", 
+            isSpanning ? "text-lg" : "text-base",
+            colorMode !== "title" && layerColors.text
+          )}
+          style={{ color: getTitleColor() }}
+        >
           {item.title}
         </h4>
         <div className="flex items-center gap-2">
@@ -109,9 +201,9 @@ export function RoadmapCard({
       
       {item.spanQuarters && (
         <div className="mt-auto pt-4 flex items-center text-xs font-mono opacity-75">
-          <span className={colors.text}>{item.spanQuarters.split(" - ")[0]}</span>
-          <div className={cn("h-px flex-grow mx-2", colors.line)} />
-          <span className={colors.text}>{item.spanQuarters.split(" - ")[1]}</span>
+          <span className={layerColors.text}>{item.spanQuarters.split(" - ")[0]}</span>
+          <div className={cn("h-px flex-grow mx-2", layerColors.line)} />
+          <span className={layerColors.text}>{item.spanQuarters.split(" - ")[1]}</span>
         </div>
       )}
     </div>
