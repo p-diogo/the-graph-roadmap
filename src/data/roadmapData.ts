@@ -91,12 +91,20 @@ export const roadmapLayers: Layer[] = [
         quarter: "Q3 2026",
         spanQuarters: "Q3 2026 - Q4 2026"
       },
-      { 
-        id: "substreams-oracle", 
-        title: "Substreams", 
-        description: "Service Provider Selection Oracle", 
+      {
+        id: "substreams-oracle",
+        title: "Substreams",
+        description: "Service Provider Selection Oracle",
         quarter: "Q3 2026",
         spanQuarters: "Q3 2026 - Q4 2026"
+      },
+      {
+        id: "rpc-service",
+        title: "RPC",
+        description: "Experimental RPC Data Service",
+        quarter: "Q3 2026",
+        status: "experimental",
+        tooltip: "Experimental RPC Data Service - exploring decentralized RPC infrastructure for The Graph ecosystem."
       },
     ],
   },
