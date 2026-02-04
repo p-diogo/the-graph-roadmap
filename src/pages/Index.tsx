@@ -1,9 +1,14 @@
+import { useState } from "react";
 import { roadmapLayers, quarters } from "@/data/roadmapData";
 import { LayerSection } from "@/components/LayerSection";
 import { FilterIndicator } from "@/components/FilterIndicator";
+import { ColorModeSelector, ColorMode } from "@/components/ColorModeSelector";
+import { ProductFamilyLegend } from "@/components/ProductFamilyLegend";
 import { useRoadmapFilter } from "@/hooks/useRoadmapFilter";
 
 const Index = () => {
+  const [colorMode, setColorMode] = useState<ColorMode>("border");
+  
   const {
     activeFilter,
     activeLayerFilter,
@@ -31,6 +36,12 @@ const Index = () => {
           </p>
         </header>
 
+        {/* Color Mode Selector */}
+        <ColorModeSelector activeMode={colorMode} onModeChange={setColorMode} />
+
+        {/* Product Family Legend */}
+        <ProductFamilyLegend colorMode={colorMode} />
+
         {/* Filter Indicator */}
         <FilterIndicator 
           activeFilter={activeFilter}
@@ -56,6 +67,7 @@ const Index = () => {
             <LayerSection 
               key={layer.id} 
               layer={layer}
+              colorMode={colorMode}
               isLayerActive={activeLayerFilter === layer.id}
               isItemVisible={isItemVisible}
               isItemHighlighted={isItemHighlighted}

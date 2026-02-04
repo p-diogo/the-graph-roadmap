@@ -1,10 +1,12 @@
 import { cn } from "@/lib/utils";
 import { Layer, quarters } from "@/data/roadmapData";
 import { RoadmapCard } from "./RoadmapCard";
+import { ColorMode } from "./ColorModeSelector";
 import { Sparkles, Layers, Coins } from "lucide-react";
 
 interface LayerSectionProps {
   layer: Layer;
+  colorMode: ColorMode;
   isLayerActive?: boolean;
   isItemVisible: (itemId: string, layerId: string) => boolean;
   isItemHighlighted: (itemId: string) => boolean;
@@ -44,7 +46,8 @@ const colorMap = {
 };
 
 export function LayerSection({ 
-  layer, 
+  layer,
+  colorMode,
   isLayerActive,
   isItemVisible,
   isItemHighlighted,
@@ -119,6 +122,7 @@ export function LayerSection({
                   key={item.id} 
                   item={item} 
                   colorClass={layer.colorClass}
+                  colorMode={colorMode}
                   isVisible={isItemVisible(item.id, layer.id)}
                   isHighlighted={isItemHighlighted(item.id)}
                   onClick={() => onCardClick(item.id)}
@@ -149,7 +153,8 @@ export function LayerSection({
                 >
                   <RoadmapCard 
                     item={item} 
-                    colorClass={layer.colorClass} 
+                    colorClass={layer.colorClass}
+                    colorMode={colorMode}
                     isSpanning
                     isVisible={true}
                     isHighlighted={isItemHighlighted(item.id)}
@@ -174,6 +179,7 @@ export function LayerSection({
                 <RoadmapCard 
                   item={item} 
                   colorClass={layer.colorClass}
+                  colorMode={colorMode}
                   isSpanning={!!item.spanQuarters}
                   isVisible={true}
                   isHighlighted={isItemHighlighted(item.id)}
