@@ -83,6 +83,16 @@ export const productFamilies: ProductFamily[] = [
       bgHover: "340 82% 60% / 0.15",
     },
   },
+  {
+    id: "grt",
+    keywords: ["grt", "liquid staking", "multi-chain"],
+    label: "GRT",
+    color: {
+      accent: "280 70% 55%",      // Deep violet (on-brand accent)
+      bg: "280 70% 55% / 0.08",
+      bgHover: "280 70% 55% / 0.15",
+    },
+  },
 ];
 
 // Find the product family for a given item based on title and description
