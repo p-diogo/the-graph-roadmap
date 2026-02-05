@@ -14,6 +14,16 @@ export interface ProductFamily {
 
 export const productFamilies: ProductFamily[] = [
   {
+    id: "subgraphs",
+    keywords: ["subgraph"],
+    label: "Subgraphs",
+    color: {
+      accent: "25 95% 55%",         // Orange
+      bg: "25 95% 55% / 0.08",
+      bgHover: "25 95% 55% / 0.15",
+    },
+  },
+  {
     id: "amp",
     keywords: ["amp"],
     label: "Amp",
