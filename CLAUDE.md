@@ -222,6 +222,56 @@ Edit `src/data/roadmapData.ts` and add items to the appropriate layer:
 | Protocol Layer | `protocol` | Indigo/Purple theme |
 | Tokenomics Layer | `tokenomics` | Emerald/Green theme |
 
+## Product Family Color-Coding
+
+Cards are automatically color-coded by **product family** based on keywords in their title or description. This allows users to visually identify related items across different layers at a glance.
+
+### How It Works
+
+The system is defined in `src/data/productFamilies.ts`. Each product family has:
+- **keywords**: Array of strings to match (case-insensitive) in card title or description
+- **color**: HSL accent color applied to the card title
+- **label**: Display name shown in the legend
+
+### Current Product Families
+
+| Product | Keywords | Color (HSL) |
+|---------|----------|-------------|
+| Subgraphs | `subgraph` | Orange (25 95% 55%) |
+| Amp | `amp` | Blue (217 91% 60%) |
+| Substreams | `substreams`, `firehose` | Yellow (45 93% 58%) |
+| Horizon | `horizon` | Purple (271 81% 65%) |
+| Tycho | `tycho` | Cyan (186 94% 50%) |
+| Token API | `token api` | Green (142 71% 45%) |
+| RPC | `rpc` | Pink (340 82% 60%) |
+
+### Adding a New Product Family
+
+Edit `src/data/productFamilies.ts` and add a new entry:
+
+```typescript
+{
+  id: "new-product",
+  keywords: ["keyword1", "keyword2"],
+  label: "New Product",
+  color: {
+    accent: "HUE SAT% LUM%",      // Main color for title
+    bg: "HUE SAT% LUM% / 0.08",   // Subtle background (if using gradient mode)
+    bgHover: "HUE SAT% LUM% / 0.15",
+  },
+},
+```
+
+### Inheritance Rule
+
+**Important:** If a card mentions a product keyword anywhere in its title or description, it automatically inherits that product's color—regardless of which layer it belongs to.
+
+Example: A card titled "Rewards Eligibility Oracle on Substreams" in the Tokenomics layer will display with the **Substreams yellow** color because "substreams" appears in the title.
+
+### Keyword Priority
+
+Keywords are matched in the order they appear in the `productFamilies` array. If a card contains multiple product keywords, it will use the color of the **first matching** product family.
+
 ## Status Badges
 
 - **experimental** - Purple badge for experimental features
