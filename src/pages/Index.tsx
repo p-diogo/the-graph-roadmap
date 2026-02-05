@@ -1,14 +1,13 @@
-import { useState } from "react";
 import { roadmapLayers, quarters } from "@/data/roadmapData";
 import { LayerSection } from "@/components/LayerSection";
 import { FilterIndicator } from "@/components/FilterIndicator";
-import { ColorModeSelector, ColorMode } from "@/components/ColorModeSelector";
+import { ColorMode } from "@/components/ColorModeSelector";
 import { ProductFamilyLegend } from "@/components/ProductFamilyLegend";
 import { useRoadmapFilter } from "@/hooks/useRoadmapFilter";
 
 const Index = () => {
-  const [colorMode, setColorMode] = useState<ColorMode>("border");
-  
+  const colorMode: ColorMode = "title";
+
   const {
     activeFilter,
     activeLayerFilter,
@@ -35,9 +34,6 @@ const Index = () => {
             Building the decentralized data infrastructure of tomorrow. Our strategic roadmap outlines how we're scaling The Graph protocol across multiple data services while pioneering new economic models through Horizon.
           </p>
         </header>
-
-        {/* Color Mode Selector */}
-        <ColorModeSelector activeMode={colorMode} onModeChange={setColorMode} />
 
         {/* Product Family Legend */}
         <ProductFamilyLegend colorMode={colorMode} />
