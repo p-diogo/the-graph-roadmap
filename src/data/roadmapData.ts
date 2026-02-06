@@ -150,15 +150,15 @@ export const roadmapLayers: Layer[] = [
       },
       {
         id: "cip-q2",
-        title: "Subgraphs Chain Integration Process (CIP)",
-        description: "Network-centric Chain Integrations w/ DIPs",
+        title: "Subgraphs",
+        description: "Network-First Chain Integration Process w/ DIPs",
         quarter: "Q2 2026",
         spanQuarters: "Q2 2026 - Q3 2026"
       },
       {
         id: "liquid-staking",
-        title: "Liquid Staking",
-        description: "Testnet Rollout (Q2), Mainnet Rollout (Q3), Morpho Launch (Q4)",
+        title: "GRT",
+        description: "Liquid Staking Testnet (Q2), Mainnet (Q3), & Morpho Launch (Q4)",
         quarter: "Q2 2026",
         spanQuarters: "Q2 2026 - Q4 2026"
       },
