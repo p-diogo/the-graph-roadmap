@@ -44,16 +44,6 @@ export const productFamilies: ProductFamily[] = [
     },
   },
   {
-    id: "horizon",
-    keywords: ["horizon"],
-    label: "Horizon",
-    color: {
-      accent: "271 81% 65%",      // Purple
-      bg: "271 81% 65% / 0.08",
-      bgHover: "271 81% 65% / 0.15",
-    },
-  },
-  {
     id: "tycho",
     keywords: ["tycho"],
     label: "Tycho",
@@ -61,6 +51,16 @@ export const productFamilies: ProductFamily[] = [
       accent: "186 94% 50%",      // Cyan
       bg: "186 94% 50% / 0.08",
       bgHover: "186 94% 50% / 0.15",
+    },
+  },
+  {
+    id: "horizon",
+    keywords: ["horizon"],
+    label: "Horizon",
+    color: {
+      accent: "271 81% 65%",      // Purple
+      bg: "271 81% 65% / 0.08",
+      bgHover: "271 81% 65% / 0.15",
     },
   },
   {
