@@ -45,9 +45,8 @@ export const roadmapLayers: Layer[] = [
       {
         id: "tycho-beta",
         title: "Tycho Indexer",
-        description: "GTM Planning & Public Beta launch",
-        quarter: "Q1 2026",
-        spanQuarters: "Q1 2026 - Q2 2026",
+        description: "Public Beta launch",
+        quarter: "Q2 2026",
       },
     ],
   },
@@ -71,8 +70,8 @@ export const roadmapLayers: Layer[] = [
         id: "tycho-network",
         title: "Tycho Indexer",
         description: "Data Service Network Rollout",
-        quarter: "Q2 2026",
-        spanQuarters: "Q2 2026 - Q3 2026"
+        quarter: "Q3 2026",
+        spanQuarters: "Q3 2026 - Q4 2026"
       },
       {
         id: "agentic-subgraph",
@@ -89,7 +88,7 @@ export const roadmapLayers: Layer[] = [
       },
       {
         id: "amp-subgraph",
-        title: "Amp-powered Subgraph Service",
+        title: "Amp-powered Subgraphs",
         description: "Amp as a verifiable Data Source",
         quarter: "Q3 2026",
         spanQuarters: "Q3 2026 - Q4 2026"
@@ -97,9 +96,15 @@ export const roadmapLayers: Layer[] = [
       {
         id: "substreams-oracle",
         title: "Substreams",
-        description: "Service Provider Selection Oracle\nProbabilistic Verifier for Data Integrity & Service Availability",
+        description: "Probabilistic Verifier for Data Integrity & Service Availability",
+        quarter: "Q4 2026",
+      },
+      {
+        id: "substreams-mainnet",
+        title: "Substreams",
+        description: "Data Service mainnet rollout\nProvider Selection Oracle",
         quarter: "Q3 2026",
-        spanQuarters: "Q3 2026 - Q4 2026"
+        status: "experimental",
       },
       {
         id: "rpc-service",
@@ -121,20 +126,20 @@ export const roadmapLayers: Layer[] = [
       {
         id: "rewards-oracle-span",
         title: "Subgraphs Rewards Eligibility Oracle",
-        description: "Testnet rollout (Q4'25), Mainnet rollout (Q1'26)",
+        description: "Final REO Design & Implementation\nEligibility Tracker & Dashboard",
         quarter: "Q4 2025",
         spanQuarters: "Q4 2025 - Q1 2026"
       },
       {
         id: "rewards-oracle-q2",
         title: "Rewards Eligibility Oracle",
-        description: "v2 Subgraph Service Eligibility Criteria",
+        description: "Testnet & Mainnet Rollout",
         quarter: "Q2 2026",
       },
       {
         id: "rewards-oracle-substreams",
         title: "Rewards Eligibility Oracle",
-        description: "Substreams P2P DS Support",
+        description: "Substreams Data Service Support",
         quarter: "Q4 2026",
       },
       {
@@ -154,9 +159,15 @@ export const roadmapLayers: Layer[] = [
       {
         id: "indexer-payments",
         title: "Indexer Payments (fka DIPs)",
-        description: "Amp Raw Datasets",
+        description: "Verifiable Amp Raw Datasets",
         quarter: "Q2 2026",
         spanQuarters: "Q2 2026 - Q3 2026"
+      },
+      {
+        id: "indexer-payments-dips",
+        title: "Indexer Payments (fka DIPs)",
+        description: "DIPs Subgraph Service rollout",
+        quarter: "Q2 2026",
       },
       {
         id: "grt-ccip",
