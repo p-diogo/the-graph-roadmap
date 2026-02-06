@@ -2,7 +2,6 @@ import { roadmapLayers, quarters } from "@/data/roadmapData";
 import { LayerSection } from "@/components/LayerSection";
 import { FilterIndicator } from "@/components/FilterIndicator";
 import { ColorMode } from "@/components/ColorModeSelector";
-import { ProductFamilyLegend } from "@/components/ProductFamilyLegend";
 import { useRoadmapFilter } from "@/hooks/useRoadmapFilter";
 
 const Index = () => {
@@ -35,15 +34,30 @@ const Index = () => {
           </p>
         </header>
 
-        {/* Product Family Legend */}
-        <ProductFamilyLegend colorMode={colorMode} />
-
         {/* Filter Indicator */}
-        <FilterIndicator 
+        <FilterIndicator
           activeFilter={activeFilter}
           activeLayerFilter={activeLayerFilter}
           onClear={clearFilter}
         />
+
+        {/* Filtering Hint - subtle visual aid */}
+        {!hasActiveFilter && (
+          <div className="mb-6 flex items-center justify-center gap-6 text-xs text-muted-foreground/60">
+            <div className="flex items-center gap-2">
+              <span className="w-4 h-4 rounded border border-current flex items-center justify-center">
+                <span className="w-1.5 h-1.5 rounded-full bg-current"></span>
+              </span>
+              <span>Click cards to filter</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-4 h-4 rounded border border-current flex items-center justify-center">
+                <span className="text-[10px]">×</span>
+              </span>
+              <span>Click outside to clear</span>
+            </div>
+          </div>
+        )}
 
         {/* Quarter Headers - Desktop only, Sticky */}
         <div className="hidden lg:grid grid-cols-[theme(spacing.64)_1fr] gap-8 mb-6 sticky top-0 z-10 bg-background/95 backdrop-blur-sm py-3 -mx-10 px-10">

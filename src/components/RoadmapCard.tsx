@@ -2,12 +2,7 @@ import { cn } from "@/lib/utils";
 import { RoadmapItem } from "@/data/roadmapData";
 import { getProductFamily, ProductFamily } from "@/data/productFamilies";
 import { ColorMode } from "./ColorModeSelector";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Info } from "lucide-react";
+import { Filter } from "lucide-react";
 
 interface RoadmapCardProps {
   item: RoadmapItem;
@@ -43,9 +38,9 @@ const layerColorMap = {
   },
 };
 
-export function RoadmapCard({ 
-  item, 
-  colorClass, 
+export function RoadmapCard({
+  item,
+  colorClass,
   colorMode = "border",
   isSpanning,
   isVisible = true,
@@ -174,9 +169,9 @@ export function RoadmapCard({
       )}
 
       <div className="flex justify-between items-start gap-2">
-        <h4 
+        <h4
           className={cn(
-            "font-bold", 
+            "font-bold",
             isSpanning ? "text-lg" : "text-base",
             colorMode !== "title" && layerColors.text
           )}
@@ -186,9 +181,7 @@ export function RoadmapCard({
         </h4>
         <div className="flex items-center gap-2">
           {statusBadge()}
-          {item.tooltip && (
-            <Info className="w-3.5 h-3.5 text-muted-foreground opacity-50 group-hover:opacity-100 transition-opacity" />
-          )}
+          <Filter className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-60 transition-opacity" />
         </div>
       </div>
       <p className={cn(
@@ -208,22 +201,6 @@ export function RoadmapCard({
       )}
     </div>
   );
-
-  if (item.tooltip) {
-    return (
-      <Tooltip>
-        <TooltipTrigger asChild>
-          {cardContent}
-        </TooltipTrigger>
-        <TooltipContent 
-          side="top" 
-          className="max-w-xs bg-popover border-border text-foreground p-3 z-50"
-        >
-          <p className="text-sm leading-relaxed">{item.tooltip}</p>
-        </TooltipContent>
-      </Tooltip>
-    );
-  }
 
   return cardContent;
 }

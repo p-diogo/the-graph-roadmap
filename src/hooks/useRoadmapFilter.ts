@@ -54,13 +54,13 @@ export function useRoadmapFilter(layers: Layer[]) {
     if (activeLayerFilter) {
       return layerId === activeLayerFilter;
     }
-    
+
     // If filtering by keyword
     if (activeFilter) {
       const keywords = itemKeywords.get(itemId) || [];
       return keywords.includes(activeFilter.toLowerCase());
     }
-    
+
     // No filter active
     return true;
   }, [activeFilter, activeLayerFilter, itemKeywords]);

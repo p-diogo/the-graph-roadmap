@@ -31,8 +31,9 @@ export const roadmapLayers: Layer[] = [
       { id: "tycho-q1", title: "Tycho Indexer", description: "Tycho Private MVP", quarter: "Q1 2026" },
       { id: "substreams-q1", title: "Substreams", description: "Reth & Besu Instrumentation", quarter: "Q1 2026" },
       { id: "dtcc-q2", title: "DTCC Pilot", description: "Confidential", quarter: "Q2 2026", status: "redacted" },
-      { id: "substreams-q2", title: "Substreams", description: "Substreams w/ GraphTally testing", quarter: "Q2 2026" },
-      { id: "substreams-p2p", title: "Substreams", description: "Trust-minimized P2P Data Service Specification", quarter: "Q4 2025" },
+      { id: "token-api-q4", title: "Token API (Beta)", description: "Spam Filtering, Billing, Webhooks, DeFi API, Chain Expansion", quarter: "Q4 2025" },
+      { id: "token-api-q1", title: "Token API", description: "v2.0 - Stability & Improvements", quarter: "Q1 2026" },
+      { id: "token-api-realtime", title: "Token API", description: "Real-time Token Pricing\nDEX & Chain Expansion", quarter: "Q2 2026", spanQuarters: "Q2 2026 - Q3 2026" },
       {
         id: "amp-sql",
         title: "Amp",
@@ -40,20 +41,11 @@ export const roadmapLayers: Layer[] = [
         quarter: "Q3 2026",
         spanQuarters: "Q3 2026 - Q4 2026",
         status: "experimental",
-        tooltip: "Amp SQL Platform brings verifiable blockchain data through SQL queries. This experimental feature enables developers to query raw blockchain data with SQL syntax while maintaining cryptographic verification."
       },
       {
         id: "tycho-beta",
         title: "Tycho Indexer",
         description: "GTM Planning & Public Beta launch",
-        quarter: "Q1 2026",
-        spanQuarters: "Q1 2026 - Q2 2026",
-        tooltip: "Tycho Indexer enables fast, efficient indexing of blockchain data. The GTM (Go-To-Market) Planning phase prepares for public beta launch."
-      },
-      {
-        id: "agentic-subgraph",
-        title: "Agentic Subgraph Service",
-        description: "x402-compatible Subgraph Gateway",
         quarter: "Q1 2026",
         spanQuarters: "Q1 2026 - Q2 2026",
       },
@@ -67,7 +59,7 @@ export const roadmapLayers: Layer[] = [
     colorClass: "protocol",
     items: [
       { id: "horizon-q4", title: "Horizon", description: "Testnet Rollout & Subgraph Data Service Rollout", quarter: "Q4 2025" },
-      { id: "token-api-q4", title: "Token API", description: "Spam Filtering, Billing, Webhooks, DeFi API, Chain Expansion", quarter: "Q4 2025" },
+      { id: "substreams-p2p", title: "Substreams", description: "Trust-minimized P2P Data Service Specification", quarter: "Q4 2025" },
       {
         id: "amp-network",
         title: "Amp",
@@ -75,14 +67,25 @@ export const roadmapLayers: Layer[] = [
         quarter: "Q2 2026",
         spanQuarters: "Q2 2026 - Q4 2026"
       },
-      { id: "token-api-q3", title: "Token API", description: "Data Service Network Rollout", quarter: "Q3 2026", status: "tbc" },
-      { id: "tycho-network", title: "Tycho Indexer", description: "Data Service Network Rollout", quarter: "Q3 2026", status: "tbc" },
+      {
+        id: "tycho-network",
+        title: "Tycho Indexer",
+        description: "Data Service Network Rollout",
+        quarter: "Q2 2026",
+        spanQuarters: "Q2 2026 - Q3 2026"
+      },
+      {
+        id: "agentic-subgraph",
+        title: "Agentic Subgraph Service",
+        description: "x402-compatible Subgraph Gateway",
+        quarter: "Q1 2026",
+        spanQuarters: "Q1 2026 - Q2 2026",
+      },
       {
         id: "substreams-horizon",
         title: "Substreams",
-        description: "Horizon-based Data Service MVP rollout w/ GraphTally",
+        description: "Horizon-based P2P Data Service MVP rollout w/ GraphTally",
         quarter: "Q2 2026",
-        tooltip: "Substreams provides high-throughput blockchain data streaming. The Horizon-based MVP integrates with GraphTally for verifiable data delivery."
       },
       {
         id: "amp-subgraph",
@@ -94,7 +97,7 @@ export const roadmapLayers: Layer[] = [
       {
         id: "substreams-oracle",
         title: "Substreams",
-        description: "Service Provider Selection Oracle",
+        description: "Service Provider Selection Oracle\nProbabilistic Verifier for Data Integrity & Service Availability",
         quarter: "Q3 2026",
         spanQuarters: "Q3 2026 - Q4 2026"
       },
@@ -104,7 +107,6 @@ export const roadmapLayers: Layer[] = [
         description: "Experimental RPC Data Service",
         quarter: "Q3 2026",
         status: "experimental",
-        tooltip: "Experimental RPC Data Service - exploring decentralized RPC infrastructure for The Graph ecosystem."
       },
     ],
   },
@@ -128,6 +130,12 @@ export const roadmapLayers: Layer[] = [
         title: "Rewards Eligibility Oracle",
         description: "v2 Subgraph Service Eligibility Criteria",
         quarter: "Q2 2026",
+      },
+      {
+        id: "rewards-oracle-substreams",
+        title: "Rewards Eligibility Oracle",
+        description: "Substreams P2P DS Support",
+        quarter: "Q4 2026",
       },
       {
         id: "cip-q2",

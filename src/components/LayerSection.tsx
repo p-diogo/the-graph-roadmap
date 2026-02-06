@@ -101,8 +101,9 @@ export function LayerSection({
           )}>
             {layer.tagline}
           </span>
-          <span className="text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">
-            Click to filter
+          <span className="text-xs text-muted-foreground/60 group-hover:text-muted-foreground transition-opacity flex items-center gap-1 whitespace-nowrap">
+            <span className="w-1.5 h-1.5 rounded-full bg-current"></span>
+            Click layer to filter
           </span>
         </div>
         
